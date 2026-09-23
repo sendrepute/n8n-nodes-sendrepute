@@ -1,0 +1,107 @@
+{
+  "name": "SendRepute classify before send (example only)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "75c546ce-a768-4d4f-9b15-a26432e1c739",
+      "name": "When clicking Execute workflow",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [260, 300]
+    },
+    {
+      "parameters": {
+        "operation": "classify",
+        "paidConsent": false,
+        "sender": "={{ $json.sender }}",
+        "subject": "={{ $json.subject }}",
+        "body": "={{ $json.body }}",
+        "decisionMode": "blocking",
+        "threshold": 0.8,
+        "failurePolicy": "closed"
+      },
+      "id": "f880906e-545f-42ce-8152-bd3552079c0d",
+      "name": "Classify email",
+      "type": "n8n-nodes-sendrepute.sendRepute",
+      "typeVersion": 1,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "591e795b-3201-4891-bc20-9b51274f92fb",
+              "leftValue": "={{ $json.sendrepute.allowed }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "ed953a27-5104-4a0d-b7ee-465e55f6c009",
+      "name": "Continue only when allowed",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [740, 300]
+    },
+    {
+      "parameters": {},
+      "id": "ea0cc1e1-5690-48fc-aef6-75fcaea9c614",
+      "name": "Allowed path",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [980, 220]
+    }
+  ],
+  "connections": {
+    "When clicking Execute workflow": {
+      "main": [
+        [
+          {
+            "node": "Classify email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classify email": {
+      "main": [
+        [
+          {
+            "node": "Continue only when allowed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Continue only when allowed": {
+      "main": [
+        [
+          {
+            "node": "Allowed path",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {}
+}

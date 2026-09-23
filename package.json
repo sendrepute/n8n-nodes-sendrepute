@@ -1,0 +1,53 @@
+{
+  "name": "n8n-nodes-sendrepute",
+  "version": "0.1.0",
+  "description": "Security-focused n8n community node for paid SendRepute email classification",
+  "license": "MIT",
+  "homepage": "https://www.sendrepute.com",
+  "repository": { "type": "git", "url": "https://github.com/sendrepute/n8n-nodes-sendrepute.git" },
+  "bugs": { "url": "https://github.com/sendrepute/n8n-nodes-sendrepute/issues" },
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "sendrepute",
+    "email",
+    "spam"
+  ],
+  "type": "commonjs",
+  "main": "dist/nodes/SendRepute/SendRepute.node.js",
+  "types": "dist/nodes/SendRepute/SendRepute.node.d.ts",
+  "files": [
+    "dist",
+    "examples",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "clean": "node ./scripts/clean.mjs",
+    "build": "npm run clean && tsc -p tsconfig.json && node ./scripts/copy-assets.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test ./test/*.test.cjs",
+    "pack:check": "npm run test && node ./scripts/pack-check.mjs",
+    "prepack": "npm run build"
+  },
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/SendReputeApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/SendRepute/SendRepute.node.js"
+    ]
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
+  "peerDependencies": {
+    "n8n-workflow": ">=2.16.0 <3"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "n8n-workflow": "2.16.0",
+    "typescript": "5.9.3"
+  }
+}
