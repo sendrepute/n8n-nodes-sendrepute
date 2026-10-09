@@ -1,11 +1,16 @@
 {
   "name": "n8n-nodes-sendrepute",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Security-focused n8n community node for paid SendRepute email classification",
   "license": "MIT",
   "homepage": "https://www.sendrepute.com",
-  "repository": { "type": "git", "url": "https://github.com/sendrepute/n8n-nodes-sendrepute.git" },
-  "bugs": { "url": "https://github.com/sendrepute/n8n-nodes-sendrepute/issues" },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sendrepute/n8n-nodes-sendrepute.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sendrepute/n8n-nodes-sendrepute/issues"
+  },
   "keywords": [
     "n8n-community-node-package",
     "n8n",
@@ -36,7 +41,8 @@
       "dist/credentials/SendReputeApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/SendRepute/SendRepute.node.js"
+      "dist/nodes/SendRepute/SendRepute.node.js",
+      "dist/nodes/SendRepute/SendReputeServices.node.js"
     ]
   },
   "engines": {
@@ -49,5 +55,8 @@
     "@types/node": "24.10.1",
     "n8n-workflow": "2.39.3",
     "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "@sendrepute/node": "0.1.3"
   }
 }

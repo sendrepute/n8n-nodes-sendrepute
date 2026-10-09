@@ -1,12 +1,25 @@
 # n8n-nodes-sendrepute
 
-An n8n community node for the paid SendRepute customer classification API. It
+An n8n community package for SendRepute customer services. Its original classification node
 accepts only `sender`, `subject`, and `body`; it has no recipient or attachment
 input.
 
-> **Publication status:** this package is not published to npm or the n8n
-> community registry. The instructions below install a locally built tarball in
-> a self-hosted n8n instance. They do not make it available to n8n Cloud.
+## Customer services
+
+The additional **SendRepute Services** node exposes the current non-deprecated
+customer API operations: account, billing, catalogs, AI rewrites, standard and VIP
+templates, builder services, and campaign insights. Choose an operation to reveal
+its contract fields. Structured documents use JSON fields.
+
+Every non-GET operation requires explicit authorization for each input item.
+Fetch and review the appropriate price quote before enabling that authorization
+and entering its expected price. Requests are not automatically retried. Keep
+recovery identifiers and use result/recovery operations after ambiguous failures.
+API key scopes, membership eligibility and spending limits still apply.
+
+The original classification node and its workflow decisions remain unchanged.
+The package is available on npm; this does not imply approval for n8n Cloud's
+verified community catalog.
 
 ## Security and decision model
 
