@@ -33,3 +33,27 @@ test('mutations require explicit approval before any network call', async () => 
     assert.equal(calls, 0);
   } finally { global.fetch = original; }
 });
+
+test('bodyless quote operations send a JSON object', async () => {
+  const service = services.find(s => s.id === 'customerQuoteCampaignInsights');
+  assert.ok(service);
+  assert.equal(service.fields.length, 0);
+  const original = global.fetch;
+  let calls = 0;
+  global.fetch = async (url, options) => {
+    calls++;
+    assert.equal(options.body, '{}');
+    assert.equal(options.headers['content-type'], 'application/json');
+    return new Response('{"price":0}', { status: 200, headers: { 'content-type': 'application/json' } });
+  };
+  try {
+    const result = await SendReputeServices.prototype.execute.call({
+      getCredentials: async () => ({ apiKey: 'fixture-only' }),
+      getInputData: () => [{ json: {} }],
+      getNode: () => ({ name: 'test', type: 'test', typeVersion: 1, position: [0,0], parameters: {} }),
+      getNodeParameter: name => name === 'operation' ? service.id : true,
+    });
+    assert.equal(calls, 1);
+    assert.equal(result[0][0].json.result.price, 0);
+  } finally { global.fetch = original; }
+});

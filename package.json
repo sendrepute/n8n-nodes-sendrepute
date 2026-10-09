@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-sendrepute",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Security-focused n8n community node for paid SendRepute email classification",
   "license": "MIT",
   "homepage": "https://www.sendrepute.com",

@@ -47,7 +47,7 @@ export class SendReputeServices implements INodeType {
       if (service.method !== 'GET' && this.getNodeParameter('authorizeMutation', index, false) !== true) {
         throw new NodeOperationError(this.getNode(), 'Explicit operation authorization is required. No request was sent.');
       }
-      const input: Record<string, Record<string, unknown>> = {};
+      const input: Record<string, Record<string, unknown>> = ['POST', 'PUT', 'PATCH'].includes(service.method) ? { body: {} } : {};
       for (const field of service.fields) {
         let value = this.getNodeParameter(`${service.id}__${field.location}__${field.name}`, index);
         if (!field.required && value === '') continue;
